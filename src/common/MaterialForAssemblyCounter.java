@@ -51,8 +51,4 @@ public class MaterialForAssemblyCounter {
 	public String toString() {
 		return "MaterialForAssemblyCounter [part=" + Arrays.toString(amountOfAssembly) + "]";
 	}
-	
-	
-	
-
 }

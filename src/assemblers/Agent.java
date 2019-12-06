@@ -20,8 +20,43 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void run() {
 		while (true) {
-
-		
+			// If depot is empty, create two random different parts
+			if(materialForAssemblyCounter.getAmountOfAssembly(0)==0 && materialForAssemblyCounter.getAmountOfAssembly(1)==0 && materialForAssemblyCounter.getAmountOfAssembly(2)==0) {
+				int part1 = ThreadLocalRandom.current().nextInt(0,3);
+				int part2 = ThreadLocalRandom.current().nextInt(0,3);
+				while(part2==part1) part2 = ThreadLocalRandom.current().nextInt(0,3);
+				materialForAssemblyCounter.setAmountOfAssembly(part1, 1);
+				materialForAssemblyCounter.setAmountOfAssembly(part2, 1);
+			}
+			doThings();
+			printState();
+			// Get current types of parts in depot
+			Integer p1, p2, p3, status = -1;
+			p1 = materialForAssemblyCounter.getAmountOfAssembly(0);
+			p2 = materialForAssemblyCounter.getAmountOfAssembly(1);
+			p3 = materialForAssemblyCounter.getAmountOfAssembly(2);
+			
+			// Determine appropriate assembler and message all assemblers
+			if(p1 == 1 && p2 == 1) { status = 10; }
+			if(p2 == 1 && p3 == 1) { status = 11; }
+			if(p3 == 1 && p1 == 1) { status = 12; }
+			GlobalState.assemblerAChan.send(status);
+			GlobalState.assemblerBChan.send(status);
+			GlobalState.assemblerCChan.send(status);
+			// Wait for repsonse and empty depot
+			status = GlobalState.supplierChan.receive();
+			if(status == 1337) {
+				materialForAssemblyCounter.setAmountOfAssembly(0, 0);
+				materialForAssemblyCounter.setAmountOfAssembly(1, 0);
+			}
+			if(status == 1338) {
+				materialForAssemblyCounter.setAmountOfAssembly(1, 0);
+				materialForAssemblyCounter.setAmountOfAssembly(2, 0);
+			}
+			if(status == 1339) {
+				materialForAssemblyCounter.setAmountOfAssembly(2, 0);
+				materialForAssemblyCounter.setAmountOfAssembly(0, 0);
+			}
 		}
 	}
 	/**
