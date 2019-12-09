@@ -20,9 +20,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	 */
 	@Override
 	public void run() {
-		System.out.println("???????");
 		while (true) {
-			System.out.println("!!!!!!!!!!!!!!!");
 			int part1 = ThreadLocalRandom.current().nextInt(0, 3);
 			int part2 = part1;
 			while (part2 == part1)
@@ -51,9 +49,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			GlobalState.assemblerAChan.send(status);
 			GlobalState.assemblerBChan.send(status);
 			GlobalState.assemblerCChan.send(status);
-			System.out.println("all sent"+status.toString());
 			status = GlobalState.supplierChan.receive();		//Any received message means that the item has been consumed
-			System.out.println("received");
 			materialForAssemblyCounter.setAmountOfAssembly(0, 0);
 			materialForAssemblyCounter.setAmountOfAssembly(1, 0);
 			materialForAssemblyCounter.setAmountOfAssembly(2, 0);

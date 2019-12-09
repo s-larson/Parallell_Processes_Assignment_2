@@ -30,9 +30,7 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 		int status;
 		while (true) {
 			if (getTool() == Tool.A) {
-				System.out.println("I GONNA GET IT MY NAME IS:" + AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + getTool());
 				status = GlobalState.assemblerAChan.receive();
-				System.out.println("I GOT IT MY NAME IS:" + AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + getTool());
 				if (status == 10) {
 					GlobalState.supplierChan.send(1);
 					doThings(); // Use resources
@@ -40,20 +38,15 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 				}
 			}
 			if (getTool() == Tool.B) {
-				System.out.println("I GONNA GET IT MY NAME IS:" + AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + getTool());
 				status = GlobalState.assemblerBChan.receive();
-				System.out.println("I GOT IT MY NAME IS:" + AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + getTool());
 				if (status == 11) {
 					GlobalState.supplierChan.send(1);
 					doThings(); // Use resources
 					System.out.println(AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + " Created AB");
-					System.out.println("!!!!!!!!!!!!!!!");
 				}
 			}
 			if (getTool() == Tool.C) {
-				System.out.println("I GONNA GET IT MY NAME IS:" + AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + getTool());
 				status = GlobalState.assemblerCChan.receive();
-				System.out.println("I GOT IT MY NAME IS:" + AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + getTool());
 				if (status == 12) {
 					GlobalState.supplierChan.send(1);
 					doThings(); // Use resources
