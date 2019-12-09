@@ -28,44 +28,30 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 	 */
 	@Override
 	public void run() {
-		int status = 0;
+		int status;
 		while (true) {
-			if(getTool() == Tool.A) {
+			if (getTool() == Tool.A) {
 				status = GlobalState.assemblerAChan.receive();
-				if(status == 10) {
-					GlobalState.supplierChan.send(1337);
-					
-					// why this? context switch = bad
-					materialForAssemblyCounter.setAmountOfAssembly(0, 1);
-					materialForAssemblyCounter.setAmountOfAssembly(1, 1);
-					doThings();
+				if (status == 10) {
+					GlobalState.supplierChan.send(1);
+					doThings(); // Use resources
 					System.out.println("Created AA");
-					materialForAssemblyCounter.setAmountOfAssembly(0, 0);
-					materialForAssemblyCounter.setAmountOfAssembly(1, 0);
 				}
 			}
-			if(getTool() == Tool.B) {
+			if (getTool() == Tool.B) {
 				status = GlobalState.assemblerBChan.receive();
-				if(status == 11) {
-					GlobalState.supplierChan.send(1338);
-					materialForAssemblyCounter.setAmountOfAssembly(1, 1);
-					materialForAssemblyCounter.setAmountOfAssembly(2, 1);
-					doThings();
+				if (status == 11) {
+					GlobalState.supplierChan.send(1);
+					doThings(); // Use resources
 					System.out.println("Created AB");
-					materialForAssemblyCounter.setAmountOfAssembly(1, 0);
-					materialForAssemblyCounter.setAmountOfAssembly(2, 0);
 				}
 			}
-			if(getTool() == Tool.C) {
+			if (getTool() == Tool.C) {
 				status = GlobalState.assemblerCChan.receive();
-				if(status == 12) {
-					GlobalState.supplierChan.send(1339);
-					materialForAssemblyCounter.setAmountOfAssembly(2, 1);
-					materialForAssemblyCounter.setAmountOfAssembly(0, 1);
-					doThings();
+				if (status == 12) {
+					GlobalState.supplierChan.send(1);
+					doThings(); // Use resources
 					System.out.println("Created AC");
-					materialForAssemblyCounter.setAmountOfAssembly(2, 0);
-					materialForAssemblyCounter.setAmountOfAssembly(0, 0);
 				}
 			}
 		}
