@@ -14,9 +14,6 @@ public class GlobalState {
 	private final static int numberOfAssemblers = 6;
 	public volatile static AsynchronousChan<Integer> supplierChan = new AsynchronousChan<Integer>();
 	public volatile static List<AsynchronousChan<Integer>> assemblersChan = new ArrayList<AsynchronousChan<Integer>>();
-	public volatile static AsynchronousChan<Integer> assemblerAChan = new AsynchronousChan<Integer>();
-	public volatile static AsynchronousChan<Integer> assemblerBChan = new AsynchronousChan<Integer>();
-	public volatile static AsynchronousChan<Integer> assemblerCChan = new AsynchronousChan<Integer>();
 	
 	public static void main(String[] args) {
 		for(int i = 0; i <numberOfAssemblers; i++) {
