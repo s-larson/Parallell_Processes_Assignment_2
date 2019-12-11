@@ -16,6 +16,7 @@ public class GlobalState {
 	public volatile static List<AsynchronousChan<Integer>> assemblersChan = new ArrayList<AsynchronousChan<Integer>>();
 	
 	public static void main(String[] args) {
+		// ArrayList of channels (one for each assembler)
 		for(int i = 0; i <numberOfAssemblers; i++) {
 			assemblersChan.add(new AsynchronousChan<Integer>());
 		}

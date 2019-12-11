@@ -20,6 +20,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void run() {
 		while (true) {
+			// Generate two unique parts and place them on the depot
 			int part1 = ThreadLocalRandom.current().nextInt(0, 3);
 			int part2 = part1;
 			while (part2 == part1)
@@ -27,15 +28,14 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			materialForAssemblyCounter.setAmountOfAssembly(part1, 1);
 			materialForAssemblyCounter.setAmountOfAssembly(part2, 1);
 			doThings();
-			// printState();
-			// determine appropriate assembler
+
+			// Determine what parts are in depot and modify message (status) to be sent
+			// p1, p2 and p3 is used for a simpler comparison
+						
 			Integer p1, p2, p3, status = -1;
 			p1 = materialForAssemblyCounter.getAmountOfAssembly(0);
 			p2 = materialForAssemblyCounter.getAmountOfAssembly(1);
 			p3 = materialForAssemblyCounter.getAmountOfAssembly(2);
-			// p1,p2 = 10
-			// p2,p3 = 11
-			// p3,p1 = 12
 			if (p1 == 1 && p2 == 1) {
 				status = 10;
 			}
@@ -45,10 +45,13 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			if (p3 == 1 && p1 == 1) {
 				status = 12;
 			}
+			// Notify all assembler queues there's parts ready for pickup
 			GlobalState.assemblerAChan.send(status);
 			GlobalState.assemblerBChan.send(status);
 			GlobalState.assemblerCChan.send(status);
-			status = GlobalState.supplierChan.receive();		//Any received message means that the item has been consumed
+			
+			//Any received message means that the item has been consumed --> Reset parts
+			status = GlobalState.supplierChan.receive();		
 			materialForAssemblyCounter.setAmountOfAssembly(0, 0);
 			materialForAssemblyCounter.setAmountOfAssembly(1, 0);
 			materialForAssemblyCounter.setAmountOfAssembly(2, 0);

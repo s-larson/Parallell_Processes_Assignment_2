@@ -31,9 +31,7 @@ public class GlobalState {
 		// start the processes
 		
 		AndrewsProcess.startAndrewsProcesses(processes);
-		
-		
-		
+
 	}
 }
 
