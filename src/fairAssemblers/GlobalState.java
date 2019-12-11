@@ -12,8 +12,16 @@ import se.his.iit.it325g.common.AsynchronousChan;
 
 public class GlobalState {
 	private final static int numberOfAssemblers = 6;
+	public volatile static AsynchronousChan<Integer> supplierChan = new AsynchronousChan<Integer>();
+	public volatile static List<AsynchronousChan<Integer>> assemblersChan = new ArrayList<AsynchronousChan<Integer>>();
+	public volatile static AsynchronousChan<Integer> assemblerAChan = new AsynchronousChan<Integer>();
+	public volatile static AsynchronousChan<Integer> assemblerBChan = new AsynchronousChan<Integer>();
+	public volatile static AsynchronousChan<Integer> assemblerCChan = new AsynchronousChan<Integer>();
 	
 	public static void main(String[] args) {
+		for(int i = 0; i <numberOfAssemblers; i++) {
+			assemblersChan.add(new AsynchronousChan<Integer>());
+		}
 		
 		// create a list of runnables
 
@@ -23,7 +31,7 @@ public class GlobalState {
 		
 		// create an array of Andrews Processes based on the list of runnables
 		
-		AndrewsProcess[] processes = (AndrewsProcess[]) runnableList.stream().map(r -> new AndrewsProcess(r)).toArray();
+		AndrewsProcess[] processes = (AndrewsProcess[]) runnableList.stream().map(r -> new AndrewsProcess(r)).toArray(AndrewsProcess[]::new);
 		
 		// start the processes
 		

@@ -30,8 +30,32 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 
 	@Override
 	public void run() {
+		int status;
 		while (true) {
-
+			if (getTool() == Tool.A) {
+				status = GlobalState.assemblersChan.get(AndrewsProcess.currentRelativeToTypeAndrewsProcessId()).receive();
+				if (status == 10) {
+					GlobalState.supplierChan.send(1);
+					doThings(); // Use resources
+					System.out.println(AndrewsProcess.currentRelativeToTypeAndrewsProcessId()+" Created AA ");
+				}
+			}
+			if (getTool() == Tool.B) {
+				status = GlobalState.assemblersChan.get(AndrewsProcess.currentRelativeToTypeAndrewsProcessId()).receive();
+				if (status == 11) {
+					GlobalState.supplierChan.send(1);
+					doThings(); // Use resources
+					System.out.println(AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + " Created AB ");
+				}
+			}
+			if (getTool() == Tool.C) {
+				status = GlobalState.assemblersChan.get(AndrewsProcess.currentRelativeToTypeAndrewsProcessId()).receive();
+				if (status == 12) {
+					GlobalState.supplierChan.send(1);
+					doThings(); // Use resources
+					System.out.println(AndrewsProcess.currentRelativeToTypeAndrewsProcessId() + " Created AC ");
+				}
+			}
 		}
 	}
 
