@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import assemblers.Agent;
-import assemblers.Assembler;
+import fairAssemblers.Agent;
+import fairAssemblers.Assembler;
 import se.his.iit.it325g.common.AndrewsProcess;
 import se.his.iit.it325g.common.AsynchronousChan;
 
