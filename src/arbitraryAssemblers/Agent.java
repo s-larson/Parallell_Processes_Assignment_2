@@ -49,6 +49,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			/* Notify all assembler queues there's parts ready for pickup
 			 * Since there can be multiple assemblers on the same channel, the message will be picked up in FIFO order
 			*/
+			System.out.println(status);
 			GlobalState.assemblerAChan.send(status);
 			GlobalState.assemblerBChan.send(status);
 			GlobalState.assemblerCChan.send(status);
@@ -75,7 +76,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void doThings(){
 		AndrewsProcess.uninterruptibleMinimumDelay(ThreadLocalRandom
-				.current().nextInt(500, 1000));	
+				.current().nextInt(50, 100));	
 	}
 	
 	/* (non-Javadoc)

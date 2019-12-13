@@ -45,6 +45,8 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			if (p3 == 1 && p1 == 1) {
 				status = 12;
 			}
+			
+			System.out.println(status);
 			// Notify all assembler queues there's parts ready for pickup
 			GlobalState.assemblerAChan.send(status);
 			GlobalState.assemblerBChan.send(status);
@@ -71,7 +73,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void doThings(){
 		AndrewsProcess.uninterruptibleMinimumDelay(ThreadLocalRandom
-				.current().nextInt(500, 1000));	
+				.current().nextInt(50, 100));	
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

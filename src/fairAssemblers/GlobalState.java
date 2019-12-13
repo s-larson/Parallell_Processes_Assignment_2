@@ -11,7 +11,7 @@ import se.his.iit.it325g.common.AndrewsProcess;
 import se.his.iit.it325g.common.AsynchronousChan;
 
 public class GlobalState {
-	private final static int numberOfAssemblers = 6;
+	private final static int numberOfAssemblers = 5;
 	public volatile static AsynchronousChan<Integer> supplierChan = new AsynchronousChan<Integer>();
 	public volatile static List<AsynchronousChan<Integer>> assemblersChan = new ArrayList<AsynchronousChan<Integer>>();
 	
