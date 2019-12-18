@@ -2,6 +2,7 @@ package arbitraryAssemblers;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import assemblers.GlobalState;
 import common.IAssemblyActorProcess;
 import common.MaterialForAssemblyCounter;
 import se.his.iit.it325g.common.AndrewsProcess;
@@ -20,7 +21,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	 */
 	@Override
 	public void run() {
-		while (true) {
+		while (GlobalState.totalPartsA + GlobalState.totalPartsB + GlobalState.totalPartsC < 60) {
 			// Generate two unique parts and place them on the depot
 			int part1 = ThreadLocalRandom.current().nextInt(0, 3);
 			int part2 = part1;
@@ -39,12 +40,18 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 
 			if (p1 == 1 && p2 == 1) {
 				status = 10;
+				GlobalState.totalPartsA++;
+				GlobalState.totalPartsB++;
 			}
 			if (p2 == 1 && p3 == 1) {
 				status = 11;
+				GlobalState.totalPartsB++;
+				GlobalState.totalPartsC++;
 			}
 			if (p3 == 1 && p1 == 1) {
 				status = 12;
+				GlobalState.totalPartsA++;
+				GlobalState.totalPartsC++;
 			}
 			/* Notify all assembler queues there's parts ready for pickup
 			 * Since there can be multiple assemblers on the same channel, the message will be picked up in FIFO order
@@ -60,6 +67,12 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			materialForAssemblyCounter.setAmountOfAssembly(1, 0);
 			materialForAssemblyCounter.setAmountOfAssembly(2, 0);
 		}
+		System.out.println("Total A created: "+ GlobalState.totalPartsA);
+		System.out.println("Total B created: "+ GlobalState.totalPartsB);
+		System.out.println("Total C created: "+ GlobalState.totalPartsC);
+		System.out.println("Total A assembled: " + GlobalState.totalAssembledA);
+		System.out.println("Total B assembled: " + GlobalState.totalAssembledB);
+		System.out.println("Total C assembled: " + GlobalState.totalAssembledC);
 	}		
 	/**
 	 * This method prints the state of the Agent process
@@ -76,7 +89,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void doThings(){
 		AndrewsProcess.uninterruptibleMinimumDelay(ThreadLocalRandom
-				.current().nextInt(50, 100));	
+				.current().nextInt(5, 10));	
 	}
 	
 	/* (non-Javadoc)

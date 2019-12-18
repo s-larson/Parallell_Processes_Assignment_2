@@ -30,7 +30,7 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 	public void run() {
 		int status;
 		// Status represents what parts has been created by the Agent
-		while (true) {
+		while (GlobalState.totalAssembledA + GlobalState.totalAssembledB + GlobalState.totalAssembledC < 60) {
 			// * Applies to all types of assemblers: * 
 			// 1. Listen to channel of corresponding type for information of what parts currently exists
 			// 2. If the assembler's tools can handle the parts, use them and notify Agent through supplierChan
@@ -42,6 +42,7 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 					GlobalState.supplierChan.send(1);
 					doThings();
 					System.out.println("Created AA");
+					GlobalState.totalAssembledA++;
 				}
 			}
 			if (getTool() == Tool.B) {
@@ -50,6 +51,7 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 					GlobalState.supplierChan.send(1);
 					doThings();
 					System.out.println("Created AB");
+					GlobalState.totalAssembledB++;
 				}
 			}
 			if (getTool() == Tool.C) {
@@ -58,6 +60,7 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 					GlobalState.supplierChan.send(1);
 					doThings();
 					System.out.println("Created AC");
+					GlobalState.totalAssembledC++;
 				}
 			}
 		}
@@ -78,7 +81,7 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void doThings() {
 		AndrewsProcess.uninterruptibleMinimumDelay(ThreadLocalRandom.current()
-				.nextInt(500, 1000));
+				.nextInt(100, 500));
 	}
 	
 	/* (non-Javadoc)

@@ -11,9 +11,17 @@ import se.his.iit.it325g.common.AndrewsProcess;
 import se.his.iit.it325g.common.AsynchronousChan;
 
 public class GlobalState {
-	private final static int numberOfAssemblers = 5;
+	private final static int numberOfAssemblers = 6;
 	public volatile static AsynchronousChan<Integer> supplierChan = new AsynchronousChan<Integer>();
 	public volatile static List<AsynchronousChan<Integer>> assemblersChan = new ArrayList<AsynchronousChan<Integer>>();
+	
+	//Used for testing
+	public volatile static int totalPartsA = 0;
+	public volatile static int totalPartsB = 0;
+	public volatile static int totalPartsC = 0;
+	public volatile static int totalAssembledA = 0;
+	public volatile static int totalAssembledB = 0;
+	public volatile static int totalAssembledC = 0;
 	
 	public static void main(String[] args) {
 		// ArrayList of channels (one for each assembler)

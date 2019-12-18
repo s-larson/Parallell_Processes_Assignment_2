@@ -19,7 +19,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	 */
 	@Override
 	public void run() {
-		while (true) {
+		while (GlobalState.totalPartsA + GlobalState.totalPartsB + GlobalState.totalPartsC < 60) {
 			// Generate two unique parts and place them on the depot
 			int part1 = ThreadLocalRandom.current().nextInt(0, 3);
 			int part2 = part1;
@@ -31,18 +31,24 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 
 			// Determine what parts are in depot and modify message (status) to be sent
 			// p1, p2 and p3 is used for a simpler comparison
-						
+			
 			Integer p1, p2, p3, status = -1;
 			p1 = materialForAssemblyCounter.getAmountOfAssembly(0);
 			p2 = materialForAssemblyCounter.getAmountOfAssembly(1);
 			p3 = materialForAssemblyCounter.getAmountOfAssembly(2);
 			if (p1 == 1 && p2 == 1) {
+				GlobalState.totalPartsA++;
+				GlobalState.totalPartsB++;
 				status = 10;
 			}
 			if (p2 == 1 && p3 == 1) {
+				GlobalState.totalPartsB++;
+				GlobalState.totalPartsC++;
 				status = 11;
 			}
 			if (p3 == 1 && p1 == 1) {
+				GlobalState.totalPartsC++;
+				GlobalState.totalPartsA++;
 				status = 12;
 			}
 			
@@ -58,6 +64,12 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			materialForAssemblyCounter.setAmountOfAssembly(1, 0);
 			materialForAssemblyCounter.setAmountOfAssembly(2, 0);
 		}
+		System.out.println("Total A created: "+ GlobalState.totalPartsA);
+		System.out.println("Total B created: "+ GlobalState.totalPartsB);
+		System.out.println("Total C created: "+ GlobalState.totalPartsC);
+		System.out.println("Total A assembled: " + GlobalState.totalAssembledA);
+		System.out.println("Total B assembled: " + GlobalState.totalAssembledB);
+		System.out.println("Total C assembled: " + GlobalState.totalAssembledC);
 	}
 	/**
 	 * This method prints the state of the Agent process
@@ -73,7 +85,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void doThings(){
 		AndrewsProcess.uninterruptibleMinimumDelay(ThreadLocalRandom
-				.current().nextInt(50, 100));	
+				.current().nextInt(1, 5));	
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

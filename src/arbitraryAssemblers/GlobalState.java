@@ -19,6 +19,14 @@ public class GlobalState {
 	public static AsynchronousChan<Integer> assemblerCChan = new AsynchronousChan<Integer>();
 	public static AsynchronousChan<Integer> supplierChan = new AsynchronousChan<Integer>();
 	
+	//Used for testing
+	public volatile static int totalPartsA = 0;
+	public volatile static int totalPartsB = 0;
+	public volatile static int totalPartsC = 0;
+	public volatile static int totalAssembledA = 0;
+	public volatile static int totalAssembledB = 0;
+	public volatile static int totalAssembledC = 0;
+	
 	public static void main(String[] args) {
 		
 		// create a list of runnables

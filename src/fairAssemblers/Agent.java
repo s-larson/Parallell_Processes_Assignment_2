@@ -35,7 +35,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			totalB = totalA;
 			totalC = totalA -1;
 		}
-		while (true) {
+		while (GlobalState.totalPartsA + GlobalState.totalPartsB + GlobalState.totalPartsC < 60) {
 			// Determine what parts should be generated and modify message (status) to be sent
 			// p1, p2 and p3 represents available parts and are used for a simpler comparison
 			// Fairness is ensured with turnParts, since it cycles through all combination of parts methodically
@@ -46,16 +46,22 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			if(turnParts==0) {
 				p1 = 1; 
 				p2 = 1;
+				GlobalState.totalPartsA++;
+				GlobalState.totalPartsB++;
 				turnParts++;
 				if(GlobalState.assemblersChan.size()==1) turnParts=0;
 			}else if(turnParts  == 1) {
 				p2 = 1;
 				p3 = 1;
+				GlobalState.totalPartsC++;
+				GlobalState.totalPartsB++;
 				turnParts++;
 				if(GlobalState.assemblersChan.size()==2) turnParts=0;
 			}else if (turnParts == 2) {
 				p3 = 1;
 				p1 = 1;
+				GlobalState.totalPartsA++;
+				GlobalState.totalPartsC++;
 				turnParts=0;
 			}
 			
@@ -90,6 +96,13 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 			materialForAssemblyCounter.setAmountOfAssembly(1, 0);
 			materialForAssemblyCounter.setAmountOfAssembly(2, 0);
 		}
+		System.out.println("Total A created: "+ GlobalState.totalPartsA);
+		System.out.println("Total B created: "+ GlobalState.totalPartsB);
+		System.out.println("Total C created: "+ GlobalState.totalPartsC);
+		System.out.println("Total A assembled: " + GlobalState.totalAssembledA);
+		System.out.println("Total B assembled: " + GlobalState.totalAssembledB);
+		System.out.println("Total C assembled: " + GlobalState.totalAssembledC);
+
 	}
 	
 	/**
@@ -108,7 +121,7 @@ public class Agent implements Runnable, IAssemblyActorProcess {
 	@Override
 	public void doThings(){
 		AndrewsProcess.uninterruptibleMinimumDelay(ThreadLocalRandom
-				.current().nextInt(1000, 1100));	
+				.current().nextInt(5, 10));	
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
