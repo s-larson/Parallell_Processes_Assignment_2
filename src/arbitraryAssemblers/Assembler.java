@@ -30,7 +30,8 @@ public class Assembler implements Runnable, IAssemblyActorProcess {
 	public void run() {
 		// Status represents what parts has been created by the Agent
 		int status;
-		while (GlobalState.totalAssembledA + GlobalState.totalAssembledB + GlobalState.totalAssembledC < 60) {
+		// Limit amount of parts crafted for testing. Replace statement with "True" for infinite crafting.
+		while (GlobalState.totalAssembledA + GlobalState.totalAssembledB + GlobalState.totalAssembledC < GlobalState.maximumPartsAssembled) {
 			// * Applies to all types of assemblers: * 
 			// 1. Listen to channel of corresponding type for information of what parts currently exists
 			// 2. If the assembler's tools can handle the parts, use them and notify Agent through supplierChan

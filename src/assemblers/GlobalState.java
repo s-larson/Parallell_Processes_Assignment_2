@@ -22,6 +22,7 @@ public class GlobalState {
 	public volatile static int totalAssembledA = 0;
 	public volatile static int totalAssembledB = 0;
 	public volatile static int totalAssembledC = 0;
+	public final static int maximumPartsAssembled = 60;
 	
 	public static void main(String[] args) {
 
